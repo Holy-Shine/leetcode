@@ -6,7 +6,6 @@
 
 # @lc code=start
 class Solution:
-    # 使用次数数组
     row_used   = []   # 当前行已经使用的数字
     col_used   = []   # 当前列已经使用的数字
     block_used = []   # 当前九宫格已经使用的数字
@@ -50,12 +49,12 @@ class Solution:
         Solution.row_used   = []   # 当前行已经使用的数字
         Solution.col_used   = []   # 当前列已经使用的数字
         Solution.block_used = []   # 当前九宫格已经使用的数字
-        # 初始化次数数组
+        # 初始化使用数字
         for i in range(10):
             Solution.row_used.append(set([]))
             Solution.col_used.append(set([]))
             Solution.block_used.append(set([]))
-        # 更新使用次数数组
+        # 更新已使用数组
         for i in range(9):
             for j in range(9):
                 if board[i][j] in Solution.numbers:
