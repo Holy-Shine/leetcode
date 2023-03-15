@@ -1,5 +1,10 @@
+#
+# @lc app=leetcode.cn id=51 lang=python3
+#
+# [51] N 皇后
+#
 
-from typing import List
+# @lc code=start
 class Solution:
     col_used = []
     ans = []
@@ -7,7 +12,7 @@ class Solution:
     def dag_used(self, pos, cur):
         '''前面每行占用的列的位置
         '''
-        for i,p in enumerate(pos):
+        for i in range(len(pos)):
             if abs(len(pos)-i)==abs(pos[i]-cur):
                 return True
         return False
@@ -34,8 +39,12 @@ class Solution:
         Solution.ans = []
         # 从第一行开始依次摆放
         self.dfs(0, n, [])
+        ans = []
+        for a in Solution.ans:
+            ss = []
+            for pos in a:
+                ss.append('.'*pos+'Q'+'.'*(n-pos-1))
+            ans.append(ss)
+        return ans
+# @lc code=end
 
-
-s = Solution()
-s.solveNQueens(8)
-print(1)
