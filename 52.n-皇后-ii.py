@@ -23,9 +23,8 @@ class Solution:
             if abs(len(pos)-i)==abs(pos[i]-cur):
                 return True
         return False
-    def dfs(self, r, n: int, pos: List) -> None:
+    def dfs(self, n: int, pos: List) -> None:
         '''
-        r:   当前行标
         pos: 前面已经占用的位置
         '''
         # 检查当前位置是否有可用
@@ -35,7 +34,7 @@ class Solution:
         for i in range(0, n):
             if not Solution.col_used[i] and not self.dag_used(pos, i):
                 Solution.col_used[i] = 1
-                self.dfs(r+1, n, pos+[i])
+                self.dfs(n, pos+[i])
                 # 回溯
                 Solution.col_used[i] = 0
     def totalNQueens(self, n: int) -> int:
@@ -43,7 +42,7 @@ class Solution:
         Solution.col_used = [0]*n
         Solution.ans = 0
         # 从第一行开始依次摆放
-        self.dfs(0, n, [])
+        self.dfs(n, [])
         return Solution.ans
 # @lc code=end
 
