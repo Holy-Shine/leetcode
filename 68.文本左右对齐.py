@@ -1,5 +1,10 @@
+#
+# @lc app=leetcode.cn id=68 lang=python3
+#
+# [68] 文本左右对齐
+#
 
-from typing import List
+# @lc code=start
 class Solution:
     def fullJustify(self, words: List[str], maxWidth: int) -> List[str]:
         ans = []
@@ -19,14 +24,18 @@ class Solution:
             # [cur, next) 为一组单词
             # 不是最后一行
             if next<n:
-                # 计算均匀分配的空格数， 左侧多的空格数
-                n_space = (maxWidth-l_words)//(next-cur-1)
-                m_space = (maxWidth-l_words)%(next-cur-1)
-                for i in range(cur+1, next):
-                    if i-cur-1<m_space:
-                        line+=(' '*n_space+' '+words[i])
-                    else:
-                        line+=(' '*n_space+words[i])
+                # 仅有右侧有空格
+                if next-cur==1:
+                    line+=(' '*(maxWidth-l_line))
+                else:
+                    # 计算均匀分配的空格数， 左侧多的空格数
+                    n_space = (maxWidth-l_words)//(next-cur-1)
+                    m_space = (maxWidth-l_words)%(next-cur-1)
+                    for i in range(cur+1, next):
+                        if i-cur-1<m_space:
+                            line+=(' '*n_space+' '+words[i])
+                        else:
+                            line+=(' '*n_space+words[i])
             # 最后一行左对齐
             else:
                 for i in range(cur+1, n):
@@ -36,7 +45,5 @@ class Solution:
             cur = next
         return ans
 
+# @lc code=end
 
-s = Solution()
-x=s.fullJustify(["This", "is", "an", "example", "of", "text", "justification."], 16)
-print(x)
