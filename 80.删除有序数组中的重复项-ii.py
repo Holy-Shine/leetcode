@@ -1,5 +1,10 @@
+#
+# @lc app=leetcode.cn id=80 lang=python3
+#
+# [80] 删除有序数组中的重复项 II
+#
 
-from typing import List
+# @lc code=start
 class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
         nums.append(100001) # 哨兵
@@ -25,7 +30,5 @@ class Solution:
             pos+=1
         return cur
 
+# @lc code=end
 
-s = Solution()
-x=s.removeDuplicates(nums=[0,0,1,1,1,1,2,3,3])
-print(x)
