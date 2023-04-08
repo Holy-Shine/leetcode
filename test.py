@@ -6,49 +6,31 @@
 
 # @lc code=start
 # Definition for a binary tree node.
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
+from typing import List
 class Solution:
-    prev = None
-    prev2 = None
-    pos = 
-    def find(self, root):
-        '''中序遍历找异常节点(递增)'''
-        if root.left: self.find(root.left)
-        if root.val<Solution.prev.val:
-            return
-        print(root.val)
-        Solution.prev = root
-        if root.right: self.find(root.right)
-
-    def change(self, root):
-        '''反中序遍历找替换点位(递减)'''
-        if root.right: self.change(root.right)
-        if root.val>Solution.prev2.val:
-            Solution.prev.val, Solution.prev2.val  = Solution.prev2.val, Solution.prev.val
-            return
-        Solution.prev2 = root
-        if root.left: self.change(root.left)       
-    def recoverTree(self, root) -> None:
-        """
-        Do not return anything, modify root in-place instead.
-        """
-        # 第一趟，找异常位置
-        Solution.prev = TreeNode(float("-inf"))
-        Solution.prev2 = TreeNode(float("inf")) 
-        self.find(root)
-        self.change(root)
+    def mergeStones(self, stones: List[int], k: int) -> int:
+        n = len(stones)
+        # 不可能的情况
+        if n<k or (n-k)%(k-1)!=0: return -1
+        ans = 0
+        # 贪心, 每次取和最小的区间聚合
+        while len(stones)>=k:
+            # 找最小的和
+            min_beg = 0
+            temp    = sum(stones[0:k])
+            min_val = temp
+            for i in range(k, len(stones)):
+                temp = temp+stones[i]-stones[i-k]
+                if temp<min_val:
+                    min_val = temp
+                    min_beg = i-k+1
+            ans+=min_val
+            stones = stones[:min_beg]+[min_val]+stones[min_beg+k:]
+        return ans
 # @lc code=end
 
 
 
-root = TreeNode(3)
-left = TreeNode(1)
-right = TreeNode(4, left=TreeNode(2))
-root.right = right
-root.left = left
 s = Solution()
-x=s.recoverTree(root=root)
+x=s.mergeStones([3,2,4,1],2)
+print(x)
