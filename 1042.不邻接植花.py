@@ -1,14 +1,13 @@
 #
-# @lc app=leetcode.cn id=99 lang=python3
+# @lc app=leetcode.cn id=1042 lang=python3
 #
-# [99] 恢复二叉搜索树
+# [1042] 不邻接植花
 #
 
 # @lc code=start
-# Definition for a binary tree node.
-from typing import List
 class Solution:
     ans = None
+    flag = False
     def gardenNoAdj(self, n: int, paths: List[List[int]]) -> List[int]:
         # dfs， 类似8皇后
         # 构建邻居矩阵 [[2,3,4],[3,4,5]]
@@ -20,10 +19,13 @@ class Solution:
         # pos_flag[i] 表示花园i的占用情况, 1,2,4,8分别表示已经使用了花1,2,3,4
         pos_flag = [0]*(n+1)
         checker = [1,2,4,8] # 检查器
+        Solution.flag = False #　全局检查器
         def solve(n_p):
             # 表示已经处理完N个节点
+            if Solution.flag: return
             if n_p==n+1: 
                 Solution.ans=[i for i in pos_flag]
+                Solution.flag = True
                 return
             # 检查当前节点的邻居占用情况
             ocpy = sum(set([pos_flag[i] for i in p_neighbors[n_p]]))
@@ -36,11 +38,7 @@ class Solution:
         
         solve(1) # 从节点1开始处理
         return [checker.index(x)+1 for x in Solution.ans[1:]]
-        # return ans
+
+
 # @lc code=end
 
-
-
-s = Solution()
-x=s.gardenNoAdj(5,[[4,1],[4,2],[4,3],[2,5],[1,2],[1,5]])
-print(x)
